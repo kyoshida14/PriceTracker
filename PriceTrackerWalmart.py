@@ -17,18 +17,9 @@ from wapy.api import WalmartProduct
 wapy = Wapy('7e7vuju342knmhsjnqz7grbe')
 
 def fromWalmart(productID):
-    # products = wapy.search('Lays')
-    
-    #for productID in productIDs:
-        
-        # print(product.name)
-        # ID = product.item_id
-        # print(ID)
         
     prices = wapy.product_lookup(str(productID))
     return prices.sale_price
-
-    
 
 
 
@@ -107,6 +98,7 @@ def main():
     else:
         print('Product ID:')
         productIDs = values
+        num=2
         for column in values:
             print('%s' % (column[0]))
             prices = fromWalmart(column[0])
@@ -116,9 +108,11 @@ def main():
             body = {'values': values}
             value_input_option = 'USER_ENTERED'
             result = service.spreadsheets().values().update(
-                spreadsheetId=spreadsheetId, range='Sheet1!D2',
+                spreadsheetId=spreadsheetId, range='Sheet1!D'+str(num),
                 valueInputOption=value_input_option, body=body).execute()
+            num += 1
 
 
 if __name__ == '__main__':
     main()
+
